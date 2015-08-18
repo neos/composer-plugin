@@ -27,6 +27,7 @@ class Installer extends LibraryInstaller implements InstallerInterface {
 		'site' => 'Packages/Sites/{flowPackageName}/',
 		'boilerplate' => 'Packages/Boilerplates/{flowPackageName}/',
 		'build' => 'Build/{flowPackageName}/',
+		'package' => 'Packages/Application/{flowPackageName}/',
 		'package-collection' => 'Packages/{flowPackageName}/',
 		'*' => 'Packages/{camelCasedType}/{flowPackageName}/'
 	);
