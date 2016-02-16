@@ -11,6 +11,9 @@ use Composer\Installer\LibraryInstaller;
  */
 class Installer extends LibraryInstaller implements InstallerInterface
 {
+
+    const PATTERN_MATCH_PACKAGEKEY = '/^[a-z0-9]+\.(?:[a-z0-9][\.a-z0-9]*)+$/i';
+
     /**
      * Allowed package type prefixes for valid flow packages.
      *
@@ -126,6 +129,7 @@ class Installer extends LibraryInstaller implements InstallerInterface
      * - composer manifest "extras.installer-name"
      * - first PSR-0 autoloading namespace
      * - first PSR-4 autoloading namespace
+     * - composer manifest "extras.package-key"
      * - composer package name (Does not work in all cases but common cases should be fine. Eg. "foo/bar" => "Foo.Bar", "foo/bar-baz" => "Foo.Bar.Baz")
      *
      * @param PackageInterface $package
@@ -133,7 +137,6 @@ class Installer extends LibraryInstaller implements InstallerInterface
      */
     protected function deriveFlowPackageName(PackageInterface $package)
     {
-        $flowPackageName = '';
         $extras = $package->getExtra();
         $autoload = $package->getAutoload();
         if (isset($extras['installer-name'])) {
@@ -145,8 +148,12 @@ class Installer extends LibraryInstaller implements InstallerInterface
             $namespace = key($autoload['psr-4']);
             $flowPackageName = rtrim(str_replace('\\', '.', $namespace), '.');
         } else {
-            $composerName = $package->getName();
-            $nameParts = explode('/', $composerName);
+            if (isset($extras['neos']['package-key']) && $this->isPackageKeyValid($extras['neos']['package-key'])) {
+                $name = $extras['neos']['package-key'];
+            } else {
+                $name = $package->getName();
+            }
+            $nameParts = explode('/', $name);
             $nameParts = array_map(function ($element) {
                 $subParts = explode('-', $element);
                 $subParts = array_map('ucfirst', $subParts);
@@ -157,4 +164,16 @@ class Installer extends LibraryInstaller implements InstallerInterface
 
         return $flowPackageName;
     }
+
+    /**
+     * Check the conformance of the given package key
+     *
+     * @param string $packageKey The package key to validate
+     * @return boolean If the package key is valid, returns TRUE otherwise FALSE
+     */
+    public function isPackageKeyValid($packageKey)
+    {
+        return preg_match(self::PATTERN_MATCH_PACKAGEKEY, $packageKey) === 1;
+    }
+
 }
