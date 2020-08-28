@@ -12,6 +12,7 @@
   },
   "type": "composer-plugin",
   "require": {
+    "php": "^7.1",
     "composer-plugin-api": "^1.0 || ^2.0"
   },
   "autoload": {
