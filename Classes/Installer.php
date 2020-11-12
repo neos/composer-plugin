@@ -27,13 +27,13 @@ class Installer extends LibraryInstaller implements InstallerInterface
      * @var array
      */
     protected $packageTypeToPathMapping = array(
-        'plugin' => 'Packages/Plugins/{flowPackageName}/',
-        'site' => 'Packages/Sites/{flowPackageName}/',
-        'boilerplate' => 'Packages/Boilerplates/{flowPackageName}/',
-        'build' => 'Build/{flowPackageName}/',
-        'package' => 'Packages/Application/{flowPackageName}/',
-        'package-collection' => 'Packages/{flowPackageName}/',
-        '*' => 'Packages/{camelCasedType}/{flowPackageName}/'
+        'plugin' => 'Packages/Plugins/{flowPackageName}',
+        'site' => 'Packages/Sites/{flowPackageName}',
+        'boilerplate' => 'Packages/Boilerplates/{flowPackageName}',
+        'build' => 'Build/{flowPackageName}',
+        'package' => 'Packages/Application/{flowPackageName}',
+        'package-collection' => 'Packages/{flowPackageName}',
+        '*' => 'Packages/{camelCasedType}/{flowPackageName}'
     );
 
     /**
