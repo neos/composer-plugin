@@ -24,7 +24,7 @@ The Flow package name for a given package is determined like this, on order:
 - composer manifest `extras.installer-name`
 - first PSR-0 autoloading namespace
 - first PSR-4 autoloading namespace
-- Composer manifest `extras.package-key`
+- Composer manifest `extras.neos.package-key`
 - Composer package name (Does not work in all cases but common cases should be fine – `foo/bar` => `Foo.Bar`, `foo/bar-baz` => `Foo.Bar.Baz`)
 
 Installation location
